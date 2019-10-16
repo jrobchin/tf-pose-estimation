@@ -12,6 +12,7 @@ from tf_pose import common
 from tf_pose.common import CocoPart
 from tf_pose.tensblur.smoother import Smoother
 import tensorflow.contrib.tensorrt as trt
+# from tensorflow.python.compiler.tensorrt import trt_convert as trt
 
 try:
     from tf_pose.pafprocess import pafprocess
@@ -324,7 +325,6 @@ class TfPoseEstimator:
                 minimum_segment_size=3,
                 is_dynamic_op=True,
                 maximum_cached_engines=int(1e3),
-                use_calibration=True,
             )
 
         self.graph = tf.get_default_graph()
