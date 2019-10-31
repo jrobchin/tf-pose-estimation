@@ -39,7 +39,7 @@ if __name__ == '__main__':
     while cap.isOpened():
         ret_val, image = cap.read()
 
-        humans = e.inference(image)
+        humans = e.inference(image, resize_to_default=(w > 0 and h > 0), upsample_size=4)
         if not args.showBG:
             image = np.zeros(image.shape)
         image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
@@ -47,7 +47,12 @@ if __name__ == '__main__':
         cv2.putText(image, "FPS: %f" % (1.0 / (time.time() - fps_time)), (10, 10),  cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         cv2.imshow('tf-pose-estimation result', image)
         fps_time = time.time()
-        if cv2.waitKey(1) == 27:
+
+        k = cv2.waitKey(1) 
+        if k == 100:
+            for i in range(120):
+                ret_val, image = cap.read()
+        elif k == 27:
             break
 
     cv2.destroyAllWindows()
